@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="classic" version="1.5">
+	<types>
+		<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+		<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" />
+		<fieldtype name="binary" class="solr.BinaryField" />
+
+		<fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0" />
+		<fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0" />
+		<fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0" />
+		<fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0" />
+
+		<fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0" />
+		<fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0" />
+
+
+		<fieldType name="random" class="solr.RandomSortField" indexed="true" />
+
+		<fieldType name="lowercase_string" class="solr.TextField" positionIncrementGap="100">
+			<analyzer>
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<tokenizer class="solr.KeywordTokenizerFactory"/>
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.PorterStemFilterFactory"/>
+			</analyzer>
+		</fieldType>
+
+		<fieldType name="lowercase_string2" class="solr.TextField" positionIncrementGap="100">
+			<analyzer>
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<charFilter class="solr.HTMLStripCharFilterFactory"/>
+				<tokenizer class="solr.WhitespaceTokenizerFactory" />
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+				<filter class="solr.PorterStemFilterFactory"/>
+			</analyzer>
+		</fieldType>
+
+		<fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+			<analyzer type="index">
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<charFilter class="solr.HTMLStripCharFilterFactory"/>
+				<tokenizer class="solr.WhitespaceTokenizerFactory" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.PatternReplaceFilterFactory" pattern="(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)$" replacement=""/>
+				<filter class="solr.PatternReplaceFilterFactory" pattern="^(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)" replacement=""/>
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+				<filter class="solr.KeywordRepeatFilterFactory"/>
+				<filter class="solr.PorterStemFilterFactory"/>
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			</analyzer>
+			<analyzer type="query">
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<charFilter class="solr.HTMLStripCharFilterFactory"/>
+				<tokenizer class="solr.WhitespaceTokenizerFactory" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+				<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.PatternReplaceFilterFactory" pattern="(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)$" replacement=""/>
+				<filter class="solr.PatternReplaceFilterFactory" pattern="^(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)" replacement=""/>
+				<filter class="solr.KeywordRepeatFilterFactory"/>
+		    <filter class="solr.PorterStemFilterFactory"/>
+		    <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+			</analyzer>
+		</fieldType>
+
+		<fieldType name="text_general_standard" class="solr.TextField" positionIncrementGap="100">
+			<analyzer type="index">
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<charFilter class="solr.HTMLStripCharFilterFactory"/>
+				<tokenizer class="solr.StandardTokenizerFactory" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+				<filter class="solr.PorterStemFilterFactory"/>
+			</analyzer>
+			<analyzer type="query">
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<charFilter class="solr.HTMLStripCharFilterFactory"/>
+				<tokenizer class="solr.StandardTokenizerFactory" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+				<filter class="solr.PorterStemFilterFactory"/>
+			</analyzer>
+		</fieldType>
+
+		<fieldtype name="ignored" stored="false" indexed="false" multiValued="true" class="solr.StrField" />
+
+		<fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d" />
+		<fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate" />
+		<fieldtype name="geohash" class="solr.GeoHashField" />
+
+		<fieldType name="currency" class="solr.CurrencyField" precisionStep="8" defaultCurrency="USD" currencyConfig="currency.xml" />
+
+		<!-- Spellcheck Field Type -->
+		<fieldType name="textSpell" class="solr.TextField" positionIncrementGap="100" >
+			<analyzer>
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<charFilter class="solr.HTMLStripCharFilterFactory"/>
+				<tokenizer class="solr.WhitespaceTokenizerFactory" />
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+			</analyzer>
+		</fieldType>
+
+		<fieldType name="autosuggest" class="solr.TextField" positionIncrementGap="100" >
+			<analyzer type="index">>
+				<tokenizer class="solr.WhitespaceTokenizerFactory" />
+				<filter class="solr.ShingleFilterFactory" maxShingleSize="3" outputUnigrams="true" />
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" />
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+				<filter class="solr.PatternReplaceFilterFactory" pattern="(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)$" replacement=""/>
+				<filter class="solr.PatternReplaceFilterFactory" pattern="^(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)" replacement=""/>
+				<filter class="solr.PorterStemFilterFactory"/>
+			</analyzer>
+			<analyzer  type="query">>
+				<tokenizer class="solr.WhitespaceTokenizerFactory" />
+				<filter class="solr.ShingleFilterFactory" maxShingleSize="3" outputUnigrams="true" />
+				<filter class="solr.LowerCaseFilterFactory" />
+				<filter class="solr.StopFilterFactory" ignoreCase="true" />
+				<filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+				<filter class="solr.PatternReplaceFilterFactory" pattern="(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)$" replacement=""/>
+				<filter class="solr.PatternReplaceFilterFactory" pattern="^(\u00A1|!|'|\u0022|\[|\]|\{|\}|\(|\)|,|\.|\*|:|;|\u00BF|\?|\u00AE|\u0169|\u0174|\u0153|\u2120|\u2122|™|©|®)" replacement=""/>
+				<filter class="solr.PorterStemFilterFactory"/>
+			</analyzer>
+		</fieldType>
+
+		<fieldType name="text_edge_ngrams" class="solr.TextField" positionIncrementGap="100">
+			<analyzer type="index">
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+				<tokenizer class="solr.KeywordTokenizerFactory" />
+				<filter class="solr.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="255"/>
+				<filter class="solr.LowerCaseFilterFactory" />
+                <filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+			</analyzer>
+			<analyzer type="query">
+				<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="(・|·)" replacement="" />
+                <tokenizer class="solr.KeywordTokenizerFactory" />
+				<filter class="solr.LowerCaseFilterFactory" />
+                <filter class="solr.RemoveDuplicatesTokenFilterFactory" />
+			</analyzer>
+		</fieldType>
+
+    <fieldType name="text_general_cjk" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.CJKBigramFilterFactory"  han="true" hiragana="true"  katakana="true" hangul="true" outputUnigrams="true" />
+      </analyzer>
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.CJKBigramFilterFactory"  han="true" hiragana="true"  katakana="true" hangul="true" outputUnigrams="true" />
+      </analyzer>
+    </fieldType>
+  </types>
+
+
+	<fields>
+		<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="red_example_int" type="int" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="red_example_string" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="red_example_list" type="string" indexed="true" stored="true" required="false" multiValued="true" omitNorms="false" />
+		<field name="red_example_list_s" type="text_general_standard" indexed="true" stored="false" required="false" multiValued="true" omitNorms="false" />
+		<field name="red_example_date" type="date" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+
+		<field name="text" type="text_general" indexed="true" stored="false" multiValued="true" />
+		<field name="text_spell" type="textSpell" indexed="true" stored="true" multiValued="true" />
+
+		<field name="_version_" type="long" indexed="true" stored="true" />
+		<field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false" />
+
+		<field name="autosuggest" type="autosuggest" indexed="true" stored="true" multiValued="true" />
+
+
+		<copyField source="red_example_string" dest="autosuggest" />
+		<copyField source="red_example_string" dest="text_spell" />
+		<copyField source="red_example_list" dest="red_example_list_s" />
+
+    <dynamicField name="*_i"  type="int" indexed="true"  stored="true" />
+		<dynamicField name="*_s"  type="string" indexed="true"  stored="true" />
+		<dynamicField name="*_l"  type="long" indexed="true"  stored="true" />
+		<dynamicField name="*_t"  type="text_general" indexed="true"  stored="true" />
+		<dynamicField name="*_txt" type="text_general" indexed="true"  stored="true" multiValued="true" />
+		<dynamicField name="*_b"  type="boolean" indexed="true"  stored="true" />
+		<dynamicField name="*_f"  type="float" indexed="true"  stored="true" />
+		<dynamicField name="*_d"  type="double" indexed="true"  stored="true" />
+
+		<dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false" />
+
+		<dynamicField name="*_dt" type="date" indexed="true"  stored="true" />
+		<dynamicField name="*_p"  type="location" indexed="true" stored="true" />
+
+		<dynamicField name="*_ti" type="tint" indexed="true"  stored="true" />
+		<dynamicField name="*_tl" type="tlong" indexed="true"  stored="true" />
+		<dynamicField name="*_tf" type="tfloat" indexed="true"  stored="true" />
+		<dynamicField name="*_td" type="tdouble" indexed="true"  stored="true" />
+		<dynamicField name="*_tdt" type="tdate" indexed="true"  stored="true" />
+
+		<dynamicField name="*_c"   type="currency" indexed="true"  stored="true" />
+
+		<dynamicField name="ignored_*" type="ignored" multiValued="true" />
+		<dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true" />
+
+		<dynamicField name="random_*" type="random" />
+	</fields>
+
+	<uniqueKey>id</uniqueKey>
+	<defaultSearchField>text</defaultSearchField>
+	<solrQueryParser defaultOperator="OR" />
+	<similarity class="org.apache.lucene.search.similarities.DefaultSimilarity" />
+</schema>
