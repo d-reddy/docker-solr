@@ -92,16 +92,14 @@
 
 			<str name="defType">edismax</str>
 			<str name="lowercaseOperators">false</str>
-			<str name="boost">recip(ms(NOW,red_example_date),3.16e-11,10,9)</str>
+			<str name="boost"></str>
 			<str name="qs">3</str>
 			<str name="ps">3</str>
 			<str name="qf">
-				red_example_date^9999.0
-				red_example_string^13.0
+				title^2.0
 			</str>
 			<str name="pf">
-        red_example_date^9999.0
-				red_example_string^13.0
+        title^2.0
 			</str>
 		</lst>
 
@@ -110,8 +108,7 @@
 		</arr>
 
 		<lst name="appends">
-      <!--was tenant-->
-			<str name="fq">{!field f=red_example_int v=$tenant}</str>
+			<str name="fq"></str>
 		</lst>
 	</requestHandler>
 

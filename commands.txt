@@ -1,0 +1,5 @@
+solr start -m 2g -c -a "-Dbootstrap_confdir=/opt/solr/server/solr/red_lib/conf -Dcollection.configName=red_lib"
+solr create -c red_lib
+
+-- start docker container and prevent container from stopping when starting solr
+docker run --name red-solr -d -p 8983:8983 -t red-solr tail -f /dev/null

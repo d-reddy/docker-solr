@@ -166,12 +166,16 @@
 
 
 	<fields>
+
 		<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="title" type="text_general" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+
+		<!-- <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
 		<field name="red_example_int" type="int" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
 		<field name="red_example_string" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
 		<field name="red_example_list" type="string" indexed="true" stored="true" required="false" multiValued="true" omitNorms="false" />
 		<field name="red_example_list_s" type="text_general_standard" indexed="true" stored="false" required="false" multiValued="true" omitNorms="false" />
-		<field name="red_example_date" type="date" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="red_example_date" type="date" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" /> -->
 
 		<field name="text" type="text_general" indexed="true" stored="false" multiValued="true" />
 		<field name="text_spell" type="textSpell" indexed="true" stored="true" multiValued="true" />
@@ -181,10 +185,9 @@
 
 		<field name="autosuggest" type="autosuggest" indexed="true" stored="true" multiValued="true" />
 
-
-		<copyField source="red_example_string" dest="autosuggest" />
+		<!-- <copyField source="red_example_string" dest="autosuggest" />
 		<copyField source="red_example_string" dest="text_spell" />
-		<copyField source="red_example_list" dest="red_example_list_s" />
+		<copyField source="red_example_list" dest="red_example_list_s" /> -->
 
     <dynamicField name="*_i"  type="int" indexed="true"  stored="true" />
 		<dynamicField name="*_s"  type="string" indexed="true"  stored="true" />
