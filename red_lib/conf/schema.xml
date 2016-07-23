@@ -169,6 +169,9 @@
 
 		<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
 		<field name="title" type="text_general" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="content" type="text_general" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="process-date" type="date" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
+		<field name="file-location" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
 
 		<!-- <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
 		<field name="red_example_int" type="int" indexed="true" stored="true" required="true" multiValued="false" omitNorms="true" />
